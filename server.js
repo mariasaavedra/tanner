@@ -61,7 +61,7 @@ app.listen(port, () => {
 async function logger () {  
   let filename =  "ALPHA_" + moment().format('MM-DD-YYYY-H-MM');
   console.log(filename);
-  await exec(` lighthouse "${url}" --headless --chrome-flags="--headless --no-sandbox --disable-gpu" stdout --output=json --output=html --output-path="./snapshots/${filename}.html"`);
+  await exec(` lighthouse "${url}" --chrome-flags="--headless --no-sandbox --disable-gpu" stdout --output=json --output=html --output-path="snapshots/${filename}.html"`);
 }
 
 let j = schedule.scheduleJob('0 0 * * *', function(){
