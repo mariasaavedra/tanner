@@ -5,8 +5,6 @@ const port = 5000
 const moment = require('moment');
 const schedule = require('node-schedule');
 const exec = require('await-exec')
-const { spawn } = require('child_process')
-const child = spawn('ls', ['-a', '-l']);
 const lighthouse = require('lighthouse');
 const url = "https://alphaclothing.co";
 const rule = " */1 * * * *";
@@ -63,7 +61,7 @@ app.listen(port, () => {
 async function logger () {  
   let filename =  "ALPHA_" + moment().format('MM-DD-YYYY-H-MM');
   console.log(filename);
-  await exec(` lighthouse "${url}" --chrome-flags="--headless --no-sandbox --disable-gpu" stdout --output=json --output=html --output-path="${path.resolve()}/snapshots/${filename}.html"`);
+  await exec(`node test.js`);
 }
 
 let j = schedule.scheduleJob('0 0 * * *', function(){
