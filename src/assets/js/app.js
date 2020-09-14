@@ -1,3 +1,6 @@
-fetch('http://localhost:3000/reports')
-  .then(response => response.json())
-  .then(data => console.log(data));
+
+  function reportModal(){
+    $('#exampleModal').modal('show')
+  }
+
+  window.reportModal = reportModal;

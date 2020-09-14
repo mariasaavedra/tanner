@@ -9,49 +9,99 @@
 </head>
 <body class="container">
 
-<div class="text-center p-5">
+<div class="text-center pt-5">
   <h1>Measure.</h1>
   <p>See how well your website performs. Then, get tips to improve your user experience.</p>
+  <p>Last audit:  
+    <% if (data.latestDate) { %>  
+      <%= data.latestDate %> 
+    <% } %> 
+  </p>
+</div>
+
+<div class="text-center">
+  <h3><a href="http://alphaclothing.co">http://alphaclothing.co</a></h3>
+  <a class="my-4 btn btn-primary" data-toggle="modal" data-target="#exampleModal" href="/generate">GENERATE AUDIT</a>
 </div>
 
 <div class="row">
   <div class="card col-3">
     <div class="card-body">
-      <h5 class="card-title">Peformance</h5>
+      <h5 class="card-title">Performance</h5>
+      <h5> 
+        <% if (data.lastReport) { %>  
+          <%= data.lastReport.categories.performance.score * 100%> 
+        <% } %> 
+      </h5>
     </div>
   </div>
   <div class="card col-3">
     <div class="card-body">
       <h5 class="card-title">Accessibility</h5>
+      <h5>
+        <% if (data.lastReport) { %>  
+          <%= data.lastReport.categories.accessibility.score * 100%> 
+        <% } %> 
+      </h5>
     </div>
   </div>
   <div class="card col-3">
     <div class="card-body">
       <h5 class="card-title">Best Practices</h5>
+      <h5>
+        <% if (data.lastReport) { %>  
+          <%= data.lastReport.categories["best-practices"].score * 100 %> 
+        <% } %> 
+      </h5>
     </div>
   </div>
 
   <div class="card col-3">
     <div class="card-body">
       <h5 class="card-title">SEO</h5>
+      <h5>
+        <% if (data.lastReport) { %>  
+          <%= data.lastReport.categories.seo.score * 100 %> 
+        <% } %> 
+      </h5>
     </div>
   </div>
 
 </div>
 
-<div class="text-center">
-  <h3><a href="http://alphaclothing.co">http://alphaclothing.co</a></h3>
-  <p>Last audit: Sep 11, 5:40 PM  <a href="#">View Report</a> </p>
-  <% if (files.length) { %>
+<h3 class="mt-2 py-2">Previous Reports</h3>
+<div class="row">
+  
+  <div>
+  <% if (data.files.length) { %>
     <ul>
-      <% files.forEach(function(f){ %>
+      <% data.files.forEach(function(f){ %>
         <li class="text-uppercase"><a target='_blank' href='<%= f + "" %>'><%= f %></a></li>
       <% }) %>
     </ul>
   <% } %>
+  </div>
 </div>
 
-
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Generating Report</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This may take a few minutes, check back soon.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
   
 <script src="../assets/js/bundle.js"></script>

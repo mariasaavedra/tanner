@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const ejs = require('ejs');
-const port = 3000
+const port = 5000
 const moment = require('moment');
 const schedule = require('node-schedule');
 const exec = require('await-exec')
@@ -17,7 +17,24 @@ app.use(express.static('src'));
 app.use(express.static('snapshots'));
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname + '/src/views/index.html'));
+  let latest = JSON.parse(fs.readFileSync(path.join(__dirname + '/latest-run/artifacts.json')));
+  let files = fs.readdirSync(path.join(__dirname + '/snapshots'));
+  let lastReport;
+  
+  if (files && files.length) {
+     lastReport =  JSON.parse(fs.readFileSync(path.join(__dirname + "/snapshots/" + files[1] )));
+  }
+
+  res.render('index', {data: {
+    files: files,
+    lastReport: lastReport,
+    latestDate: moment(latest).format("MM/DD/YYYY")
+  }});
+
+});
+
+app.get('/latest-report', (req, res) => {
+  // code here
 });
 
 app.get('/reports', (req, res) => {
@@ -27,9 +44,14 @@ app.get('/reports', (req, res) => {
   });
 });
 
+app.get('/generate', (req, res) => {
+  logger()
+  res.redirect('/');
+})
+
 app.get('/reports/:id', (req, res) => {
   console.log(req);
-  res.sendFile(path.join(__dirname + `/snapshots/${req.params.id}.html`));
+  res.sendFile(path.join(__dirname + `/snapshots/${req.params.id}.json`));
 }); 
 
 app.listen(port, () => {
@@ -37,9 +59,9 @@ app.listen(port, () => {
 })
 
 async function logger () {  
-  let filename =  "ALPHA_" + moment().format('DD-MM-YY-HH-MM-SS');
+  let filename =  "ALPHA_" + moment().format('MM-DD-YYYY-H-MM');
   console.log(filename);
-  await exec(` lighthouse "${url}"  --chrome-flags="--headless" stdout --output=json --output=html --output-path="./snapshots/${filename}.html" -GA`);
+  await exec(` lighthouse "${url}" --chrome-flags="--desktop --headless" stdout --output=json --output=html --output-path="./snapshots/${filename}.html"`);
 }
 
 let j = schedule.scheduleJob('0 0 * * *', function(){
