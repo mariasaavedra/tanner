@@ -61,7 +61,7 @@ app.listen(port, () => {
 async function logger () {  
   let filename =  "ALPHA_" + moment().format('MM-DD-YYYY-H-MM');
   console.log(filename);
-  await exec(`node test.js`);
+  exec(`node test.js`);
 }
 
 let j = schedule.scheduleJob('0 0 * * *', function(){

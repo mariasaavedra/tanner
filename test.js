@@ -14,7 +14,7 @@ const fs = require('fs');
 async function logger () {  
   let filename =  "ALPHA_" + moment().format('MM-DD-YYYY-H-MM');
   console.log(filename);
-  await exec(` lighthouse "${url}" --chrome-flags="--headless --no-sandbox --disable-gpu" stdout --output=json --output=html --output-path="${path.resolve()}/snapshots/${filename}.html"`);
+  exec(` lighthouse "${url}" --chrome-flags="--headless --no-sandbox --disable-gpu" stdout --output=json --output=html --output-path="${path.resolve()}/snapshots/${filename}.html"`);
 }
 
 logger();
