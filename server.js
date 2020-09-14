@@ -45,8 +45,9 @@ app.get('/reports', (req, res) => {
 });
 
 app.get('/generate', (req, res) => {
-  logger()
-  res.redirect('/');
+  logger().then(() => {
+    res.redirect('/');
+  })
 })
 
 app.get('/reports/:id', (req, res) => {
