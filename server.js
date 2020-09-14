@@ -5,6 +5,8 @@ const port = 5000
 const moment = require('moment');
 const schedule = require('node-schedule');
 const exec = require('await-exec')
+const { spawn } = require('child_process')
+const child = spawn('ls', ['-a', '-l']);
 const lighthouse = require('lighthouse');
 const url = "https://alphaclothing.co";
 const rule = " */1 * * * *";
@@ -45,9 +47,8 @@ app.get('/reports', (req, res) => {
 });
 
 app.get('/generate', (req, res) => {
-  logger().then(() => {
-    res.redirect('/');
-  })
+  logger();
+  res.redirect('/');
 })
 
 app.get('/reports/:id', (req, res) => {
