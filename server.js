@@ -68,3 +68,5 @@ let j = schedule.scheduleJob('0 0 * * *', function(){
   console.log("logging job...");
   logger()
 })
+
+logger();
